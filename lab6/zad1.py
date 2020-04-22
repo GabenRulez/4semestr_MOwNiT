@@ -1,26 +1,20 @@
+# Metoda Gaussa-Jordana
+
+# Napisz i sprawdź funkcję rozwiązującą układ równań liniowych n × n metodą Gaussa-Jordana.
+# Dla rozmiarów macierzy współczynników większych niż 500 × 500 porównaj
+# czasy działania zaimplementowanej funkcji z czasami uzyskanymi dla
+# wybranych funkcji bibliotecznych.
+
+
 import numpy as np
 import time
 import matplotlib.pyplot as plt
 from textFunctions.textFunctions import *
 
-import scipy as sp
 
-# np.linalg.solve()
-
-# np.linalg.lstsq()
-
-# sp.linalg.lu()
-
-
-
-def uklad_rownan_liniowych(n):  #
-    #macierz_glowna = np.random.rand(0.0, 100.0, (n,n))
-    #macierz_glowna = macierz_glowna / 1.0
-    macierz_glowna = 10 * np.random.random_sample((n, n))
-
-    #macierz_wynikow = np.random.randint(0.0,100.0,n)
-    #macierz_wynikow = macierz_wynikow / 1.0
-    macierz_wynikow = 10 * np.random.random_sample((n,1))
+def uklad_rownan_liniowych(n, zakres_start=0, zakres_end=10):
+    macierz_glowna = (zakres_end - zakres_start) * np.random.random_sample((n, n)) + zakres_start
+    macierz_wynikow = (zakres_end - zakres_start) * np.random.random_sample((n,1)) + zakres_start
 
     return macierz_glowna, macierz_wynikow
 
@@ -114,7 +108,7 @@ def porownaj_dwa_algorytmy(zasieg, skok, save=False, logs=False):
     ax1.legend()
     fig1.show()
     if save:
-        fig1.savefig(filename)
+        fig1.savefig("zad1/plots/"+filename)
         printTitle("Plik " + filename + " został zapisany.")
         pass
     else:
@@ -126,6 +120,7 @@ def porownaj_dwa_algorytmy(zasieg, skok, save=False, logs=False):
 
 # używam "skoku", gdyż przy zakresie od 0 do 1000 nie potrzeba nam informacji z dokładnością do 1
 # (losowość przy generowaniu macierzy tworzy "szum")
+
 
 porownaj_dwa_algorytmy(100, 1, True)
 #porownaj_dwa_algorytmy(100, 5, True)
