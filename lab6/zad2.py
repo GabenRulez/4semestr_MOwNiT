@@ -24,21 +24,21 @@ def dodaj_diagonale(macierz, wartosc):
     return
 
 def przygotuj_macierz_P(macierz_A):
-    size = len(macierz_A)
+    temp_size = len(macierz_A)
 
-    macierz_P = tworz_macierz_kwadratowa_z_zerami(size)
-    dodaj_diagonale(macierz_P, 1)
+    temp_macierz_P = tworz_macierz_kwadratowa_z_zerami(temp_size)
+    dodaj_diagonale(temp_macierz_P, 1)
 
-    for j in range(size):
+    for j in range(temp_size):
         row = j
-        for i in range(j, size):
+        for i in range(j, temp_size):
             if abs(macierz_A[i][j]) > abs(row):
                 row = i
 
         if j != row:
-            macierz_P[j], macierz_P[row] = macierz_P[row], macierz_P[j]
+            temp_macierz_P[j], temp_macierz_P[row] = temp_macierz_P[row], temp_macierz_P[j]
 
-    return macierz_P
+    return temp_macierz_P
 
 
 def faktoryzacja_LU(macierz_P, macierz_A, macierz_L, macierz_U):
@@ -47,6 +47,7 @@ def faktoryzacja_LU(macierz_P, macierz_A, macierz_L, macierz_U):
 
     n = len(macierz_A)
     PA = np.dot(macierz_P, macierz_A)
+    PA = macierz_A
 
     for j in range(n):
 
@@ -59,32 +60,6 @@ def faktoryzacja_LU(macierz_P, macierz_A, macierz_L, macierz_U):
             macierz_L[i][j] = (PA[i][j] - suma_2) / macierz_U[j][j]
 
     return macierz_L, macierz_U, macierz_P
-
-
-def LU_decomposition(M, n):
-
-    for i in range(n):
-        for j in range(i, n):  # górny trójkąt
-            sum = 0
-            for k in range(i):
-                sum += L[i][k] * U[k][j]
-            U[i][j] = M[i][j] - sum
-
-        for j in range(i, n):  # dolny trójkąt
-            L[i][i] = 1
-            if (i == j): continue
-            sum = 0
-            for k in range(i):
-                sum += L[j][k] * U[k][i]
-            L[j][i] = (M[j][i] - sum) / U[i][i]
-
-    return L, U
-
-
-
-
-
-
 
 
 
@@ -109,7 +84,8 @@ macierz_U = tworz_macierz_kwadratowa_z_zerami(size)
 
 P, L, U = scipy.linalg.lu(macierz_A.copy())    # obliczone z bibliotecznych funkcji
 
-L2, U2, P2 = faktoryzacja_LU(macierz_P, macierz_A, macierz_L, macierz_U)    # obliczone z funkcji zaimplementowanej przeze mnie
+#L2, U2, P2 = faktoryzacja_LU(macierz_P, macierz_A, macierz_L, macierz_U)    # obliczone z funkcji zaimplementowanej przeze mnie
+L2, U2, P2 = faktoryzacja_LU(macierz_P,macierz_A,macierz_L,macierz_U)
 
 ###################################################
 
@@ -119,8 +95,8 @@ print("L:")
 print(L)
 print("U:")
 print(U)
-print("P:")
-print(P)
+#print("P:")
+#print(P)
 
 printSpacer(2)
 
@@ -129,8 +105,8 @@ print("L:")
 print(L2)
 print("U:")
 print(U2)
-print("P:")
-print(P2)
+#print("P:")
+#print(P2)
 
 printTitle("Koniec wyników")
 printTitle("Koniec programu", 0)
