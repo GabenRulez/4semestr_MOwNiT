@@ -6,8 +6,6 @@
 
 import numpy as np
 from textFunctions.textFunctions import *
-import scipy.linalg
-
 
 def tworz_macierz_kwadratowa(n, zakres_start=0, zakres_end=10, asint=False):
     macierz = (zakres_end - zakres_start) * np.random.random_sample((n, n)) + zakres_start
@@ -27,7 +25,6 @@ def dodaj_diagonale(macierz, wartosc):
     for i in range(n):
         macierz[i][i] = wartosc
     return
-
 
 
 def rozklad_LUP(a):  # korzystam z algorytmu z Kincaida, str. 167
