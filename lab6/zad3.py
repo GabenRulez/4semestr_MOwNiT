@@ -23,7 +23,6 @@
 
 import networkx as nx
 import matplotlib.pyplot as plt
-import matplotlib as mpl
 import numpy as np
 
 
@@ -114,6 +113,8 @@ def Kirchoff(graph, s, t, E):
                 matrix_Dk[i][j] = 1
                 matrix_Dk[j][i] = 1
                 # prune Matrix_Dk tree (?)
+                # muszę usunąć "zbędne" odnogi, które nie wchodzą w skład pętli
+
 
     m = k   # Liczba niezależnych cykli
 
@@ -124,16 +125,8 @@ def Kirchoff(graph, s, t, E):
 
 
 
-
-
-
-
-
-
-
-
-
     pass
 
 
 Kirchoff(G, 0, 1, 0)
+
