@@ -61,15 +61,7 @@ def metodaPotegowa(matrix_A, iterations=10000, epsilon=0.00000001):
             dominujaca_wartosc_wlasna = vector_X[i][0]
 
 
-    return dominujaca_wartosc_wlasna, vector_X  # wektor X już jest przeskalowany (?), bo był dzielony przez swoją normę
-
-
-
-
-
-
-
-
+    return dominujaca_wartosc_wlasna, vector_X/np.linalg.norm(vector_X)
 
 
 
@@ -85,6 +77,6 @@ print(dom_war_wla)
 print(wektor)
 
 
-w,v = np.linalg.eig(A)
+w,v = np.linalg.eig(A)  # niestety nie wiem, skąd z tych funckji wyliczyć "wartość własną", jedyne co ona zwraca to dwie macierze
 print(w)
 print(v)
