@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 from textFunctions import *
 
 
-def metodaPotegowa(matrix_A, iterations=1000, epsilon=0.000001):
+def metodaPotegowa(matrix_A, iterations=10000, epsilon=0.000001):
     n = len(matrix_A)
     vector_X = np.zeros((n,1))
     for i in range(n):  # ustaw wartość wektora X
