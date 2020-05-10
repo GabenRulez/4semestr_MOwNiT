@@ -14,7 +14,7 @@
 import numpy as np
 import scipy.linalg
 
-from textFunctions import printLineSpacer, printTitle, printSpacer
+from textFunctions import printTitle, printSpacer
 
 
 def odwrotnaMetodaPotegowa(matrix_A, iterations=1000, epsilon=0.000001, sigma=0):
