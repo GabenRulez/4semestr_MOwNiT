@@ -16,7 +16,7 @@ from textFunctions import *
 
 def uklad_rownan_liniowych(n, zakres_start=0, zakres_end=10):
     macierz_glowna = (zakres_end - zakres_start) * np.random.random_sample((n, n)) + zakres_start
-    macierz_wynikow = (zakres_end - zakres_start) * np.random.random_sample((n,1)) + zakres_start
+    macierz_wynikow = (zakres_end - zakres_start) * np.random.random_sample((n, 1)) + zakres_start
 
     return macierz_glowna, macierz_wynikow
 
