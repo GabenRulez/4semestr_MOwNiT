@@ -24,9 +24,9 @@ from textFunctions import *
 
 
 def prostaSuma(tablica):
-    wynik = 0
+    wynik = np.float32(0)
     for i in range(len(tablica)):
-        wynik+=tablica[i]
+        wynik += tablica[i]
     return wynik
 
 def tworzLosowaMacierz(zakres_start, zakres_end, wielkosc):
@@ -34,7 +34,7 @@ def tworzLosowaMacierz(zakres_start, zakres_end, wielkosc):
     return macierz
 
 def tworzMacierzOJednakowychWartosciach(wartosc, wielkosc):
-    macierz = np.full((wielkosc), wartosc)
+    macierz = np.full((wielkosc), wartosc, dtype=np.float32)
     return macierz
 
 def losowaLiczbaZPrzedzialu(zakres_start, zakres_end):
@@ -46,6 +46,22 @@ def bladBezwzgledny(wartosc_dokladna, wartosc_zmierzona):
 
 def bladWzgledny(wartosc_dokladna, wartosc_zmierzona):
     return ( bladBezwzgledny( wartosc_dokladna, wartosc_zmierzona ) ) / wartosc_dokladna
+
+def sumaBinarna(tablica):
+    start = 0
+    koniec = len(tablica)-1
+    return pomocSumyBinarnej(tablica, start, koniec)
+
+def pomocSumyBinarnej(tablica, start, koniec):
+    if start == koniec:
+        return tablica[start]
+
+    elif start + 1 == koniec:
+        return tablica[start] + tablica[koniec]
+
+    else:
+        breakout = int( int(start+koniec)/2 )
+        return pomocSumyBinarnej(tablica, start, breakout) + pomocSumyBinarnej(tablica, breakout+1, koniec)
 
 ###########################################################
 
@@ -68,6 +84,11 @@ tempProsteMnozenie = wartosc * N
 print("Obliczona suma: {}".format(tempProstaSuma))
 print("Wynik mnożenia: {}".format(tempProsteMnozenie))
 printSpacer()
-print("Błąd bezwzględny: {}".format(bladBezwzgledny(tempProsteMnozenie, tempProstaSuma)))
-print("Błąd względny: {}".format(bladWzgledny(tempProsteMnozenie, tempProstaSuma)))
+tempBladBezwzgledny = bladBezwzgledny(tempProsteMnozenie, tempProstaSuma)
+tempBladWzgledny = bladWzgledny(tempProsteMnozenie, tempProstaSuma)
+print("Błąd bezwzględny: {}".format(tempBladBezwzgledny))
+print("Błąd względny: {} = {}%".format(tempBladWzgledny, tempBladWzgledny*100))
+
+
+print(sumaBinarna(macierz))
 
