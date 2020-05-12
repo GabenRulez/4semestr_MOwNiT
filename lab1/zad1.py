@@ -17,3 +17,57 @@
 
 # 7.    Przedstaw przykładowe dane wejściowe, dla których algorytm sumowania rekurencyjnego zwraca niezerowy błąd.
 
+
+import numpy as np
+import textFunctions
+from textFunctions import *
+
+
+def prostaSuma(tablica):
+    wynik = 0
+    for i in range(len(tablica)):
+        wynik+=tablica[i]
+    return wynik
+
+def tworzLosowaMacierz(zakres_start, zakres_end, wielkosc):
+    macierz = (zakres_end - zakres_start) * np.random.random_sample(wielkosc) + zakres_start
+    return macierz
+
+def tworzMacierzOJednakowychWartosciach(wartosc, wielkosc):
+    macierz = np.full((wielkosc), wartosc)
+    return macierz
+
+def losowaLiczbaZPrzedzialu(zakres_start, zakres_end):
+    wartosc = (zakres_end - zakres_start) * np.random.random(1) + zakres_start
+    return wartosc[0]
+
+def bladBezwzgledny(wartosc_dokladna, wartosc_zmierzona):
+    return abs(wartosc_dokladna - wartosc_zmierzona)
+
+def bladWzgledny(wartosc_dokladna, wartosc_zmierzona):
+    return ( bladBezwzgledny( wartosc_dokladna, wartosc_zmierzona ) ) / wartosc_dokladna
+
+###########################################################
+
+printTitle("Początek programu")
+
+wartosc = losowaLiczbaZPrzedzialu(0.1, 0.9)
+N = 10000000    # N = 10^7
+macierz = tworzMacierzOJednakowychWartosciach(wartosc, N)
+
+print("Wartość wybranej losowej liczby to {}.".format(wartosc))
+print("Wielkość macierzy to {}.".format(N))
+
+
+printSpacer()
+
+
+printTitle("'Prosta suma' - najzwyklejsze dodawanie")
+tempProstaSuma = prostaSuma(macierz)
+tempProsteMnozenie = wartosc * N
+print("Obliczona suma: {}".format(tempProstaSuma))
+print("Wynik mnożenia: {}".format(tempProsteMnozenie))
+printSpacer()
+print("Błąd bezwzględny: {}".format(bladBezwzgledny(tempProsteMnozenie, tempProstaSuma)))
+print("Błąd względny: {}".format(bladWzgledny(tempProsteMnozenie, tempProstaSuma)))
+
