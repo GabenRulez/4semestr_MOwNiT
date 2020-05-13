@@ -98,3 +98,15 @@ for s in wartosci_s:
         print("Podwójna precyzja:")
         print("dzeta 'w przód': {0:<18}      eta 'w przód':  {0:<18}".format(dzeta(s, n, False), eta(s, n, False)))
         print("dzeta 'w tył':   {0:<18}      eta 'w tył':    {0:<18}".format(dzeta_backwards(s, n, False), eta_backwards(s, n, False) ))
+
+printTitle("Koniec programu")
+
+
+# 3
+# W przypadku liczb pojedynczej precyzji:
+# Obliczanie dzety "w tył" tworzy bardziej dokładny wynik.
+# Moim zdaniem jest to wynik dodawania dużych liczb do małej liczby, zamiast dodawania małych liczb do jednej dużej.
+
+# W przypadku liczb podwójnej precyzji:
+# Tutaj kolejność wykonywania (w przód / w tył) nie ma już takiego wpływu na wynik,
+# a różnice między jednym a drugim występują jedynie na ostatniej / ostatnich dwóch najmniej znaczących cyfrach.
