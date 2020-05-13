@@ -134,7 +134,18 @@ stworzDiagramBifurkacyjny(1.0, 4.0, 400, [0.4, 0.67, 0.9], dotted=True, save=Fal
 printSpacer()
 
 # 4.b
+# Stworzyłem dwa diagramy
+# (zad4\plots\Diagram_Bifurkacyjny__r-3.75-3.8__dokladnosc-10000_dotted_single.png) i
+# (zad4\plots\Diagram_Bifurkacyjny__r-3.75-3.8__dokladnosc-10000_dotted_double.png)
 
+# w których obliczenia wykonywałem z użyciem pojedynczej(single) i podwójnej(double) precyzji.
+# Same wykresy wyglądają bardzo podobnie, i choć może to być jedynie moje złudzenie to mam wrażenie,
+# że obliczenia podwójną precyzją stworzyły bardziej płynne linie (przy attractorach).
 
-stworzDiagramBifurkacyjny(3.75, 3.8, 4001, [0.4, 0.67, 0.9], dotted=True, save=True, logs=True, precyzja="single")
-stworzDiagramBifurkacyjny(3.75, 3.8, 4001, [0.4, 0.67, 0.9], dotted=True, save=True, logs=True, precyzja="double")
+# Oba wykresy pokazały, że występuje w r ~= 3.775 moment "wyjścia z chaosu", gdzie powstało kilka linii,
+# na których są wszystkie punkty z tego zakresu.
+# Niedaleko dalej wszystko znowu przechodzi w chaos i widać niektóre miejsca, w których punkty "bardziej się zbierają"
+# (średnia wartość x nie jest 0.5).
+
+stworzDiagramBifurkacyjny(3.75, 3.8, dokladnosc=10000, wartosci_x0=[0.4, 0.67, 0.9], dotted=True, save=True, logs=True, precyzja="single")
+stworzDiagramBifurkacyjny(3.75, 3.8, dokladnosc=10000, wartosci_x0=[0.4, 0.67, 0.9], dotted=True, save=True, logs=True, precyzja="double")
