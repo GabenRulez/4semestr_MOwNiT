@@ -100,6 +100,8 @@ def stworzDiagramBifurkacyjny(r_start, r_koniec, dokladnosc=400, wartosci_x0=[],
 
 
 
+
+
 printTitle("Początek programu")
 
 
@@ -131,15 +133,47 @@ printSpacer()
 # Niedaleko dalej wszystko znowu przechodzi w chaos i widać niektóre miejsca, w których punkty "bardziej się zbierają"
 # (średnia wartość x nie jest 0.5).
 
-stworzDiagramBifurkacyjny(3.75, 3.8, dokladnosc=10000, wartosci_x0=[0.4, 0.67, 0.9], dotted=True, save=True, logs=True, precyzja="single")
-stworzDiagramBifurkacyjny(3.75, 3.8, dokladnosc=10000, wartosci_x0=[0.4, 0.67, 0.9], dotted=True, save=True, logs=True, precyzja="double")
+#stworzDiagramBifurkacyjny(3.75, 3.8, dokladnosc=10000, wartosci_x0=[0.4, 0.67, 0.9], dotted=True, save=True, logs=True, precyzja="single")
+#stworzDiagramBifurkacyjny(3.75, 3.8, dokladnosc=10000, wartosci_x0=[0.4, 0.67, 0.9], dotted=True, save=True, logs=True, precyzja="double")
 
 
 printSpacer()
 
 
+
 # 4.c
+# Przy r = 4 ilość iteracji dla różnych x0 potrzebna do osiągnięcia zera jest niewielka (~2000).
+# Przy testowaniu wpisanych przeze mnie liczb, wszystkie zmierzały do 0.
+# Dopiero gdy zmieniłem te x0 na wartości losowe napotkałem parę przypadków,
+# gdzie twardy limit miliona iteracji był niewystarczający.
+# Można chyba założyć, że te konkretne wartości oscylują w nieskończoność pomiędzy 0 a 1.
+# Porównując wartości bardzo sobie bliskie (jak x0 = 0.3 i x0 = 0.30001) ilość iteracji
+# zdaje się być zupełnie ze sobą niepowiązana i nieprzewidywalna.
 
+printTitle("Ile iteracji przy r=4, aby x_n = 0")
 
+r = 4
+rozne_x0 = []
+for i in range(10):
+    rozne_x0.append( np.random.random(1)[0] )
+
+srednia = 0
+
+for x_0 in rozne_x0:
+    print("Dla x0 = {}".format(x_0))
+    iteracje = 0
+    x = np.float32(x_0)
+    while x!=0:
+        x = getNextElement(x, r, "single")
+        iteracje = iteracje + 1
+
+        if iteracje>=1000000:   # hardlimit, na wypadek niespodziewanej pętli
+            break
+    srednia += iteracje
+    print("Ilość iteracji: {}".format(iteracje))
+    printSpacer()
+
+srednia = srednia / len(rozne_x0)
+printTitle("Średnia ilość iteracji: {}".format(srednia))
 
 
