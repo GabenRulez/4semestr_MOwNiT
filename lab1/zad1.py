@@ -21,6 +21,7 @@
 import numpy as np
 import textFunctions
 from textFunctions import *
+import matplotlib.pyplot as plt
 
 
 def prostaSuma(tablica):
@@ -45,6 +46,8 @@ def bladBezwzgledny(wartosc_dokladna, wartosc_zmierzona):
     return abs(wartosc_dokladna - wartosc_zmierzona)
 
 def bladWzgledny(wartosc_dokladna, wartosc_zmierzona):
+    if wartosc_dokladna==0:
+        wartosc_dokladna = 1e-16
     return ( bladBezwzgledny( wartosc_dokladna, wartosc_zmierzona ) ) / wartosc_dokladna
 
 def sumaBinarna(tablica):
@@ -62,6 +65,42 @@ def pomocSumyBinarnej(tablica, start, koniec):
     else:
         breakout = int( int(start+koniec)/2 )
         return pomocSumyBinarnej(tablica, start, breakout) + pomocSumyBinarnej(tablica, breakout+1, koniec)
+
+
+def rysujWykres(wartosc, zasieg, skok, save=False, logs=False):
+    filename = "{}__zakres-{}__skok-{}.png".format("wzrost-bledu-wzglednego", zasieg, skok)
+    printTitle("Rozpoczynam generowanie " + filename)
+
+    wartosc = np.float32(wartosc)
+
+    bledy = []
+    skoki = []
+
+    i = skok
+    while(i < zasieg):
+
+        temp = bladWzgledny(wartosc * i, prostaSuma(tworzMacierzOJednakowychWartosciach(wartosc, i))) * 100
+        bledy.append(temp)
+        skoki.append(i)
+
+        if logs:
+            print("Ukończono obliczanie sumy {} elementów. Błąd względny wyniósł: {}%".format(i,temp))
+
+        i += skok
+
+    fig1, ax1 = plt.subplots()
+    ax1.set_title("'{}', skok: {}".format("Wzrost błędu względnego", skok))
+
+    ax1.set_xlabel("Ilość sumowań")
+    ax1.set_ylabel("Błąd względny w %")
+    ax1.plot(skoki, bledy)
+    fig1.show()
+    if save:
+        fig1.savefig("zad1/plots/"+filename)
+        printTitle("Plik " + filename + " został zapisany.")
+        pass
+    else:
+        printTitle("Skończone generowanie " + filename)
 
 ###########################################################
 
@@ -89,6 +128,49 @@ tempBladWzgledny = bladWzgledny(tempProsteMnozenie, tempProstaSuma)
 print("Błąd bezwzględny: {}".format(tempBladBezwzgledny))
 print("Błąd względny: {} = {}%".format(tempBladWzgledny, tempBladWzgledny*100))
 
+# 1.2
+# Błąd względny jest tak duży, z racji, że każda operacja dodawania wprowadza "błąd" (maszynowy epsilon),
+# ściśle związany z dokładnością mantysy
+# (tak naprawdę połową możliwej "różnicy" w zapisie liczby typu float32).
 
-print(sumaBinarna(macierz))
+
+printSpacer()
+
+
+printTitle("Suma liczona drzewem binarnym - rekurencyjnie")
+tempSumaRekurencyjna = sumaBinarna(macierz)
+tempProsteMnozenie = wartosc * N
+print("Obliczona suma: {}".format(tempSumaRekurencyjna))
+print("Wynik mnożenia: {}".format(tempProsteMnozenie))
+printSpacer()
+tempBladBezwzgledny = bladBezwzgledny(tempProsteMnozenie, tempSumaRekurencyjna)
+tempBladWzgledny = bladWzgledny(tempProsteMnozenie, tempSumaRekurencyjna)
+print("Błąd bezwzględny: {}".format(tempBladBezwzgledny))
+print("Błąd względny: {} = {}%".format(tempBladWzgledny, tempBladWzgledny*100))
+
+# 1.5
+# Błąd względny znacznie zmalał zapewne z faktu, że dodawanie 'proste' bazowało na utworzeniu jednej dużej liczby
+# i N operacjach dodania małych liczb.
+# W takim przypadku znaczna część cyfr znaczących "małych liczb" nie zmieści się wśród cyfr znaczących dużej liczby.
+# W sumowaniu binarnym natomiast, cyfry znaczące praktycznie zawsze się pokrywają,
+# przez co powstały błąd jest niewielki, praktycznie znikomy.
+
+
+printSpacer(2)
+
+
+printTitle("Jak rośnie błąd względny w trakcie sumowania? ('prosta suma')", 0)
+
+rysujWykres(wartosc, 1000000, 25000, save=False, logs=True)
+
+# 1.3
+# Błąd względny "prostej sumy" rośnie logarytmicznie, ale "fazami".
+# Bład wynika zapewne z dodawania małych liczb do jednej bardzo dużej
+# - cyfry znaczące tych małych liczb nie mieszczą się w cyfrach znaczących dużej.
+# "Fazy" - te nagłe spadki tłumaczyłbym faktem, że porównuję wynik dodawania z wynikiem mnożenia,
+# zakładając, że wynik mnożenia jest w pełni poprawny, a nie jest to prawdą.
+# Uskoki powstały w miejscach, gdzie następował "przeskok" na ostatnim, najmniej znaczącym bicie wyniku mnożenia.
+
+
+
 
