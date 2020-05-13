@@ -181,7 +181,7 @@ printSpacer()
 
 printTitle("Porównanie czasu wykonania dla dwóch algorytmów")
 
-N2 = 1000000
+N2 = 10000000
 print("Tworzę nową macierz o {} elementach.".format(N2))
 macierz2 = tworzMacierzOJednakowychWartosciach(wartosc, N2)
 printSpacer()
