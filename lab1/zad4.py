@@ -133,8 +133,8 @@ printSpacer()
 # Niedaleko dalej wszystko znowu przechodzi w chaos i widać niektóre miejsca, w których punkty "bardziej się zbierają"
 # (średnia wartość x nie jest 0.5).
 
-#stworzDiagramBifurkacyjny(3.75, 3.8, dokladnosc=10000, wartosci_x0=[0.4, 0.67, 0.9], dotted=True, save=True, logs=True, precyzja="single")
-#stworzDiagramBifurkacyjny(3.75, 3.8, dokladnosc=10000, wartosci_x0=[0.4, 0.67, 0.9], dotted=True, save=True, logs=True, precyzja="double")
+stworzDiagramBifurkacyjny(3.75, 3.8, dokladnosc=10000, wartosci_x0=[0.4, 0.67, 0.9], dotted=True, save=False, logs=True, precyzja="single")
+stworzDiagramBifurkacyjny(3.75, 3.8, dokladnosc=10000, wartosci_x0=[0.4, 0.67, 0.9], dotted=True, save=False, logs=True, precyzja="double")
 
 
 printSpacer()
