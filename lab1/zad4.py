@@ -21,8 +21,19 @@ from textFunctions import *
 import numpy as np
 import matplotlib.pyplot as plt
 
-def getNextElement(poprzedni, r):
-    return r * poprzedni * (1-poprzedni)
+def getNextElement(poprzedni, r, precyzja=""):
+    if precyzja=="single":
+        poprzedni = np.float32(poprzedni)
+        r = np.float32(r)
+        return np.float32( r * poprzedni * (1-poprzedni) )
+
+    elif precyzja=="double":
+        poprzedni = np.float64(poprzedni)
+        r = np.float64(r)
+        return np.float64(r * poprzedni * (1 - poprzedni))
+
+    else:
+        return r * poprzedni * (1-poprzedni)
 
 
 
@@ -41,52 +52,57 @@ def eta(s, n, singlePrecision=True):
 
 
 
-def stworzDiagramyBifurkacyjneZx0(zasieg, skok, x_0, save=False, logs=False):
-    filename = "{}__x0-{}__zakres-{}__skok-{}.png".format("Diagramy_Bifurkacyjne", x_0, zasieg, skok)
+def stworzDiagramBifurkacyjny(r_start, r_koniec, dokladnosc=400, wartosci_x0=[], max_iterations=1000, save=False, dotted=False, logs=False, precyzja=""):
+    filename = "Diagram_Bifurkacyjny__r-{}-{}__dokladnosc-{}".format(r_start, r_koniec, dokladnosc)
+    if dotted:
+        filename = filename + "_dotted"
+    else:
+        filename = filename + "_plotted"
+
+    if precyzja!="":
+        filename = filename + "_{}".format(precyzja)
+    filename = filename + ".png"
+
     printTitle("Rozpoczynam generowanie " + filename)
 
-    x_0 = np.float32(x_0)
-
-    r_1 = np.float32(1.253)
-    r_2 = np.float32(2.5392)
-    r_3 = np.float32(2.99924)
-
-    wyniki_1 = [x_0]
-    wyniki_2 = [x_0]
-    wyniki_3 = [x_0]
-
-    last_1 = x_0
-    last_2 = x_0
-    last_3 = x_0
-
-    skoki = [0]
-
-    i = 1
-    while(i < zasieg):
-        temp_1 = getNextElement(last_1, r_1)
-        last_1 = temp_1
-        wyniki_1.append(temp_1)
-
-        temp_2 = getNextElement(last_2, r_2)
-        last_2 = temp_2
-        wyniki_2.append(temp_2)
-
-        temp_3 = getNextElement(last_3, r_3)
-        last_3 = temp_3
-        wyniki_3.append(temp_3)
-
-        skoki.append(i)
-        if logs:
-            print("Ukończono krok {}".format(i))
-        i += skok
-
     fig1, ax1 = plt.subplots()
-    ax1.set_title("Diagramy bifurkacyjne, skok:" + str(skok) )
-    ax1.set_xlabel("Numer iteracji")
-    ax1.set_ylabel("Wartość")
-    ax1.plot(skoki, wyniki_1, label="x0={} r={}".format(x_0, r_1))
-    ax1.plot(skoki, wyniki_2, label="x0={} r={}".format(x_0, r_2))
-    ax1.plot(skoki, wyniki_3, label="x0={} r={}".format(x_0, r_3))
+    ax1.set_title("Diagram bifurkacyjny")
+    ax1.set_xlabel("Wartość r")
+    ax1.set_ylabel("Wartość x")
+
+    wartosci_r = np.linspace(r_start, r_koniec, dokladnosc)
+
+    for x_0_iter in range(len(wartosci_x0)):
+        if logs:
+            printTitle("Rozpoczynam obliczenia dla x0 = {}".format(wartosci_x0[x_0_iter]))
+
+        wyniki_x0 = []
+        for r in wartosci_r:
+            temp_last = wartosci_x0[x_0_iter]
+
+            if precyzja=="single":
+                temp_last = np.float32(temp_last)
+            elif precyzja=="double":
+                temp_last = np.float64(temp_last)
+
+            for i in range(max_iterations):
+
+                if precyzja=="":
+                    temp_last = getNextElement(temp_last, r)
+                else:
+                    temp_last = getNextElement(temp_last, r, precyzja)
+
+            wyniki_x0.append(temp_last)
+
+        if dotted:
+            ax1.scatter(wartosci_r, wyniki_x0, label="x0={0:4}".format(wartosci_x0[x_0_iter]), s=2)
+        else:
+            ax1.plot(wartosci_r, wyniki_x0, label="x0={0:4}".format(wartosci_x0[x_0_iter]))
+
+        if logs:
+            printTitle("Koniec obliczeń dla x0 = {}".format(wartosci_x0[x_0_iter]))
+
+
     ax1.legend()
     fig1.show()
     if save:
@@ -104,8 +120,21 @@ printTitle("Początek programu")
 
 
 # 4.a
-# Stworzyłem
+# Stworzyłem diagram bifurkacyjny dla trzech różnych wartości x_0 i zakresu r [1.0, 4.0]
+# (zad4/plots/Diagram_Bifurkacyjny__r-1.0-4.0__dokladnosc-400_plotted.png)
+# Na obrazku widać, że dla r od 1 do ~3.0 poszczególne wykresy "nakładają się" i przypominają fragment krzywej logarytmicznej,
+# lecz potem wręcz losowo "skaczą", oscylują między znacznie różnącymi się wartościami.
 
-#stworzDiagramyBifurkacyjneZx0(150, 1, 0.5, save=True)
-#stworzDiagramyBifurkacyjneZx0(20, 1, 0.21, save=True)
+# Tak naprawdę łączenie tych elementów jako ciągły wykres może być złym pomysłem, dlatego zaimplementowałem też opcję
+# z wykresem w postaci pojedynczych kropek (zad4/plots/Diagram_Bifurkacyjny__r-1.0-4.0__dokladnosc-400_dotted.png).
 
+
+stworzDiagramBifurkacyjny(1.0, 4.0, 400, [0.4, 0.67, 0.9], dotted=True, save=False, logs=True)
+
+printSpacer()
+
+# 4.b
+
+
+stworzDiagramBifurkacyjny(3.75, 3.8, 4001, [0.4, 0.67, 0.9], dotted=True, save=True, logs=True, precyzja="single")
+stworzDiagramBifurkacyjny(3.75, 3.8, 4001, [0.4, 0.67, 0.9], dotted=True, save=True, logs=True, precyzja="double")
