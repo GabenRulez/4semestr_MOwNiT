@@ -36,22 +36,6 @@ def getNextElement(poprzedni, r, precyzja=""):
         return r * poprzedni * (1-poprzedni)
 
 
-
-def eta(s, n, singlePrecision=True):
-    if singlePrecision:
-        wynik = np.float32(0.0)
-        for k in range(1, n + 1):  # dla k=1,2, ... , n
-            wynik = np.float32(wynik + (-1) ** (k - 1) * (1 / (k ** s)))
-
-    else:
-        wynik = np.float64(0.0)
-        for k in range(1, n + 1):  # dla k=1,2, ... , n
-            wynik = np.float64(wynik + (-1) ** (k - 1) * (1 / (k ** s)))
-    return wynik
-
-
-
-
 def stworzDiagramBifurkacyjny(r_start, r_koniec, dokladnosc=400, wartosci_x0=[], max_iterations=1000, save=False, dotted=False, logs=False, precyzja=""):
     filename = "Diagram_Bifurkacyjny__r-{}-{}__dokladnosc-{}".format(r_start, r_koniec, dokladnosc)
     if dotted:
@@ -149,3 +133,13 @@ printSpacer()
 
 stworzDiagramBifurkacyjny(3.75, 3.8, dokladnosc=10000, wartosci_x0=[0.4, 0.67, 0.9], dotted=True, save=True, logs=True, precyzja="single")
 stworzDiagramBifurkacyjny(3.75, 3.8, dokladnosc=10000, wartosci_x0=[0.4, 0.67, 0.9], dotted=True, save=True, logs=True, precyzja="double")
+
+
+printSpacer()
+
+
+# 4.c
+
+
+
+
