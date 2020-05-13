@@ -107,7 +107,7 @@ def rysujWykres(wartosc, zasieg, skok, save=False, logs=False):
 
 printTitle("Początek programu")
 
-wartosc = losowaLiczbaZPrzedzialu(0.1, 0.9)
+wartosc = np.float32( losowaLiczbaZPrzedzialu(0.1, 0.9) )
 N = 10000000    # N = 10^7
 macierz = tworzMacierzOJednakowychWartosciach(wartosc, N)
 
