@@ -1,0 +1,46 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><title>Sensitivity to Initial Conditions</title></head><body cz-shortcut-listen="true"> 
+
+<h2>Sensitivity to initial conditions</h2>
+Another important feature emerges in the chaotic region ...<br>
+To see it, we set r=3.99 and begin at x<sub>1</sub>=.3. The next graph shows the time series for 48 iterations of the logistic map.
+<center><img src="Sensitivity%20to%20Initial%20Conditions_pliki/Fig2_002.GIF"></center>
+<center><i>  Time series for Logistic map r=3.99, x<sub>1</sub>=.3, 48 
+iterations.</i></center><p>
+Now, suppose we alter the starting point a bit. The next figure compares the time series for x<sub>1</sub>=.3 (in black) with that for x<sub>1</sub>=.301 (in blue).
+</p><center><img src="Sensitivity%20to%20Initial%20Conditions_pliki/Fig2_004.GIF"></center>
+<center><i> Two time series for r=3.99, x<sub>1</sub>=.3 compared to 
+x<sub>1</sub>=.301</i></center>
+The two time series stay close together for about 10 iterations. But after that, they are pretty much on their own.<br>
+Let's try starting closer together. We next compare starting at .3 with starting at .3000001...
+<center><img src="Sensitivity%20to%20Initial%20Conditions_pliki/Fig2_003.GIF"></center>
+<center><i> Two time series for r=3.99, x<sub>1</sub>=.3 compared to 
+x<sub>1</sub>=.3000001</i></center>
+This time they stay close for a longer time, but after 24 iterations 
+they diverge. To see just how independent they become, the next figure 
+provides scatterplots for the two series before and after 24 iterations.
+<center><img src="Sensitivity%20to%20Initial%20Conditions_pliki/Fig2.GIF"></center>
+<center><i> Scatterplots of series starting at .3 vs.  series starting at 
+.3000001. <br>The 
+first 24 cycles on the left, next 24 on the right.</i></center>
+<br>
+The correlation after 24 iterations (right side), is essentially zero. Unreliability has replaced reliability.<p>
+
+We have illustrated here one of the symptoms of chaos. A chaotic system is one for which <i>the distance between two trajectories from nearby points in its state space diverge over time</i>. The magnitude of the divergence increases <i>exponentially</i> in a chaotic system.</p><p>
+
+So what? Well, it means that a chaotic system, even one determined by a 
+simple rule, is in principle unpredictable. Say what? It is 
+unpredictable, "in principle" because in order to predict its behavior  
+into the future we must know its currrent value <em>precisely</em>. We 
+have here an example where a slight difference, in the sixth decimal 
+place, resulted in prediction failure after 24 iterations. And six 
+decimal places far exceeds the kind of measuring accuracy we typically 
+achieve with natural biological systems.</p><p>
+
+
+
+
+<a href="https://www.vanderbilt.edu/AnS/psychology/cogsci/chaos/workshop/Symptoms.html">Next Section: Symptoms of Chaos</a>
+
+ 
+</p></body></html>
