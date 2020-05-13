@@ -23,40 +23,78 @@ import numpy as np
 from textFunctions import *
 import textFunctions
 
+
 def dzeta(s, n, singlePrecision=True):
     if singlePrecision:
-        print("here1")
         wynik = np.float32(0.0)
-        for k in range(1, n+1):  # dla k=1,2, ... , n
-            wynik = np.float32(wynik + 1 / (k ^ s))     # "castowanie" było potrzebne, gdyż Python sam dokonywał zamiany typów
+        for k in range(1, n + 1):  # dla k=1,2, ... , n
+            wynik = np.float32( wynik + 1 / (k ** s) )  # "castowanie" było potrzebne, gdyż Python sam dokonywał zamiany typów
 
     else:
-        print("here2")
         wynik = np.float64(0.0)
-        for k in range(1, n+1):  # dla k=1,2, ... , n
-            wynik = np.float64(wynik + 1 / (k ^ s))
+        for k in range(1, n + 1):  # dla k=1,2, ... , n
+            wynik = np.float64(wynik + 1 / (k ** s))
     return wynik
 
 
-def dzeta_backwards(s,n, singlePrecision=True):
+def dzeta_backwards(s, n, singlePrecision=True):
     if singlePrecision:
-        print("here1")
         wynik = np.float32(0.0)
         for k in range(n, 0, -1):
-            wynik = np.float32(wynik + 1 / (k ^ s))
+            wynik = np.float32(wynik + 1 / (k ** s))
 
     else:
-        print("here2")
         wynik = np.float64(0.0)
         for k in range(n, 0, -1):
-            wynik = np.float64(wynik + 1 / (k ^ s))
+            wynik = np.float64(wynik + 1 / (k ** s))
     return wynik
 
-print(dzeta(0,5))
 
+def eta(s, n, singlePrecision=True):
+    if singlePrecision:
+        wynik = np.float32(0.0)
+        for k in range(1, n + 1):  # dla k=1,2, ... , n
+            wynik = np.float32(wynik + (-1) ** (k - 1) * (1 / (k ** s)))
+
+    else:
+        wynik = np.float64(0.0)
+        for k in range(1, n + 1):  # dla k=1,2, ... , n
+            wynik = np.float64(wynik + (-1) ** (k - 1) * (1 / (k ** s)))
+    return wynik
+
+
+def eta_backwards(s, n, singlePrecision=True):
+    if singlePrecision:
+        wynik = np.float32(0.0)
+        for k in range(n, 0, -1):
+            wynik = np.float32(wynik + (-1) ** (k - 1) * (1 / (k ** s)))
+
+    else:
+        wynik = np.float64(0.0)
+        for k in range(n, 0, -1):
+            wynik = np.float64(wynik + (-1) ** (k - 1) * (1 / (k ** s)))
+    return wynik
+
+
+printTitle("Początek programu")
+
+wartosci_s = [2, 3.6667, 5, 7.2, 10]
+wartosci_n = [50, 100, 200, 500, 1000]
+
+print("Wartości s: ", wartosci_s)
+print("Wartości n: ", wartosci_n)
 
 printSpacer()
-print(dzeta_backwards(0,5))
-print(dzeta_backwards(0,5,False))
 
-#print(dzeta_backwards(0,5,False))
+printTitle("Obliczenia dzeta Riemanna i eta Dirichleta")
+
+for s in wartosci_s:
+    for n in wartosci_n:
+        printTitle("s = {}   n = {}".format(s,n))
+        print("Pojedyncza precyzja:")
+        print("dzeta 'w przód': {0:<18}      eta 'w przód':  {0:<18}".format( dzeta(s, n, True), eta(s, n, True) ))
+        print("dzeta 'w tył':   {0:<18}      eta 'w tył':    {0:<18}".format( dzeta_backwards(s, n, True), eta_backwards(s, n, True) ))
+        printSpacer()
+        print("Podwójna precyzja:")
+        print("dzeta 'w przód': {0:<18}      eta 'w przód':  {0:<18}".format(dzeta(s, n, False), eta(s, n, False)))
+        print("dzeta 'w tył':   {0:<18}      eta 'w tył':    {0:<18}".format(dzeta_backwards(s, n, False), eta_backwards(s, n, False) ))
