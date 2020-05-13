@@ -22,6 +22,7 @@ import numpy as np
 import textFunctions
 from textFunctions import *
 import matplotlib.pyplot as plt
+import time
 
 
 def prostaSuma(tablica):
@@ -161,7 +162,7 @@ printSpacer(2)
 
 printTitle("Jak rośnie błąd względny w trakcie sumowania? ('prosta suma')", 0)
 
-rysujWykres(wartosc, 1000000, 25000, save=False, logs=True)
+#rysujWykres(wartosc, 1000000, 25000, save=False, logs=True)
 
 # 1.3
 # Błąd względny "prostej sumy" rośnie logarytmicznie, ale "fazami".
@@ -173,4 +174,44 @@ rysujWykres(wartosc, 1000000, 25000, save=False, logs=True)
 
 
 
+
+
+printSpacer()
+
+
+printTitle("Porównanie czasu wykonania dla dwóch algorytmów")
+
+N2 = 1000000
+print("Tworzę nową macierz o {} elementach.".format(N2))
+macierz2 = tworzMacierzOJednakowychWartosciach(wartosc, N2)
+printSpacer()
+
+start = time.process_time()
+prostaSuma(macierz2)
+czas_1 = time.process_time() - start
+
+start = time.process_time()
+sumaBinarna(macierz2)
+czas_2 = time.process_time() - start
+
+print("Czas 'prostej sumy': {}s".format(czas_1))
+print("Czas sumy 'binarnej': {}s".format(czas_2))
+
+# 1.6
+# Dodawanie rekurencyjne jest znacznie dłuższe, a wynika to zapewne z racji tworzenia nowych "tymczasowych" sum,
+# które dopiero na samym końcu dodawania zapisywane są jako "odpowiedni wynik".
+
+
+
+printSpacer()
+
+
+printTitle("Przykładowe dane, dla których sumowanie rekurencyjne ma niezerowy błąd")
+
+wartosc_przykladowa = np.float32(1.999899983406067)
+ilosc_przykladowa = 10
+
+macierz_przykladowa = tworzMacierzOJednakowychWartosciach(wartosc_przykladowa, ilosc_przykladowa)
+print("Wartość sumowana: {} razy {}".format(wartosc_przykladowa, ilosc_przykladowa))
+print("Błąd względny: {}".format( bladWzgledny(19.99899983406067, sumaBinarna(macierz_przykladowa)) ))
 
