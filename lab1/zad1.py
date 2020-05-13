@@ -162,7 +162,7 @@ printSpacer(2)
 
 printTitle("Jak rośnie błąd względny w trakcie sumowania? ('prosta suma')", 0)
 
-#rysujWykres(wartosc, 1000000, 25000, save=False, logs=True)
+rysujWykres(wartosc, 10000000, 25000, save=False, logs=True)     # jeśli długo zajmuje, to proszę wykomentować ta linijkę
 
 # 1.3
 # Błąd względny "prostej sumy" rośnie logarytmicznie, ale "fazami".
