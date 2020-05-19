@@ -272,5 +272,23 @@ def read_directed_graph_from_file(filename):
 
 
 
+
 wiki_vote = read_directed_graph_from_file("Wiki-Vote.txt")
 print(full_page_rank(wiki_vote, create_default_e(wiki_vote), 0.85))
+
+
+
+
+def create_default_e(graph):   #posprzątanie "print()"
+    n = nx.number_of_nodes(graph)
+    e = np.zeros((1, n))
+    i = 0
+    for node_a, node_b in graph.edges():
+        e[0][int(node_b)] += 1
+        i += 1
+    return e/i
+
+def create_different_e(graph):
+    n = nx.number_of_nodes(graph)
+    e = np.ones((1, n))
+    return e/n
