@@ -13,7 +13,7 @@ import textFunctions
 from textFunctions import *
 import time
 
-### Funkcje pomocnicze z lab1/zad1.py ###
+### Funkcje pomocnicze z lab01/zad1.py ###
 
 def tworzMacierzOJednakowychWartosciach(wartosc, wielkosc):
     macierz = np.full((wielkosc), wartosc, dtype=np.float32)
