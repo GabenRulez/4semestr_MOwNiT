@@ -24,6 +24,8 @@ from textFunctions import *
 import matplotlib.pyplot as plt
 import time
 
+from textFunctions.textFunctions import printSpacer, printTitle
+
 
 def prostaSuma(tablica):
     wynik = np.float32(0)

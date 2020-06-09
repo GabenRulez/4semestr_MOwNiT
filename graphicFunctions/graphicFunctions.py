@@ -2,6 +2,8 @@ import textFunctions
 from textFunctions import *
 import matplotlib.pyplot as plt
 
+from textFunctions.textFunctions import printTitle
+
 
 def rysujWykres(funkcja, zasieg, skok, save=False, logs=False, xlabel="", ylabel=""):
     # filename = 'porownanie_czasu_algorytmow__zakres-' + str(zasieg) + '__skok-' + str(skok) + '.png'
