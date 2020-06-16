@@ -6,6 +6,8 @@
 
 import numpy as np
 from textFunctions import *
+from textFunctions.textFunctions import *
+
 
 def tworz_macierz_kwadratowa(n, zakres_start=0, zakres_end=10, asint=False):
     macierz = (zakres_end - zakres_start) * np.random.random_sample((n, n)) + zakres_start
