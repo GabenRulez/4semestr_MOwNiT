@@ -97,7 +97,7 @@ print("L * U")
 print(np.dot(l, u))
 printSpacer(1)
 print("Różnica między tymi wynikami:")
-print(np.dot(p, a) - np.dot(l, u))
+print(abs(np.dot(p, a) - np.dot(l, u)))
 printTitle("Koniec programu", 0)
 
 # Jak widać, różnica między tymi wynikami jest znikoma, a tak naprawdę wynika zapewne z niedokładności liczb (float).

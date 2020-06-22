@@ -10,8 +10,8 @@ import numpy as np
 import time
 import matplotlib.pyplot as plt
 from textFunctions import *
-
-
+import textFunctions
+from textFunctions.textFunctions import *
 
 
 def uklad_rownan_liniowych(n, zakres_start=0, zakres_end=10):

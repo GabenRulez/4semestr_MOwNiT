@@ -34,7 +34,7 @@ def readWeightedGraph(nodesFile, edgesFile, directional):   # umożliwia czytani
     else:
         G = nx.Graph()
 
-    edges = nx.read_edgelist(edgesFile, data=(('weight', float),))
+    edges = nx.read_edgelist(edgesFile, data=(('R', float),))
     nodes = nx.read_adjlist(nodesFile)
 
     G.add_nodes_from(nodes)
@@ -45,7 +45,7 @@ def readWeightedGraph(nodesFile, edgesFile, directional):   # umożliwia czytani
 def displayGraph(graph):    # wyświetlanie grafu i wag krawędzi (potrzebne, aby sprawdzić czy cokolwiek działa)
     pos = nx.circular_layout(graph)
 
-    labels = nx.get_edge_attributes(graph, 'weight')
+    labels = nx.get_edge_attributes(graph, 'R')
     nx.draw_networkx(graph, pos=pos, with_labels=True, font_weight='bold', node_color='red')
     nx.draw_networkx_edge_labels(graph, pos=pos, edge_labels=labels)
     plt.show()
@@ -68,8 +68,8 @@ def Kirchoff(graph, s, t, E):
         matrix_A[int(node1)][int(node2)] = 1
         matrix_A[int(node2)][int(node1)] = 1
 
-        matrix_R[int(node1)][int(node2)] = data["weight"]
-        matrix_R[int(node2)][int(node1)] = data["weight"]
+        matrix_R[int(node1)][int(node2)] = data["R"]
+        matrix_R[int(node2)][int(node1)] = data["R"]
 
     matrix_V[s][t] = E
     # już przygotowane macierze
@@ -128,5 +128,5 @@ def Kirchoff(graph, s, t, E):
     pass
 
 
-Kirchoff(G, 0, 1, 0)
+Kirchoff(G, 0, 1, 12.5)
 
